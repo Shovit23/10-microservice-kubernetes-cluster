@@ -1,0 +1,31 @@
+trigger:
+- main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  AWS_DEFAULT_REGION: 'ap-south1' # Change to your AWS region
+  CLUSTER_NAME: '10-microservice-kubernetes'
+  NAMESPACE: 'default'
+  MANIFEST_PATH: '/kubernetes-manifests'
+
+stages:
+- stage: Deploy
+  jobs:
+  - job: DeployToEKS
+    steps:
+
+    - task: DownloadSecureFile@1
+      name: awsCredentials
+      inputs:
+        secureFile: 'aws-credentials.json'
+
+    - script: |
+        pip install awscli
+        aws eks update-kubeconfig --name $(CLUSTER_NAME) --region $(AWS_DEFAULT_REGION)
+      displayName: 'Configure AWS CLI'
+
+    - script: |
+        kubectl apply -f $(MANIFEST_PATH)/*.yaml -n $(NAMESPACE)
+      displayName: 'Deploy to EKS'
