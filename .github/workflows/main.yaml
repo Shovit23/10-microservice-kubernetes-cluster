@@ -16,23 +16,18 @@ jobs:
       CLUSTER_NAME: '10-microservice-kubernetes'
       NAMESPACE: 'default'
       MANIFEST_PATH: 'release' # Update this to the correct path
+      sec: 'AKIASIVGLKZENLZQZ54U'
+      pass: 'tWoKXkX51PvZw18VPtj87h5QT7X23aQ7xURXIuon'
 
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
-    - name: Print AWS Credentials
-      run: |
-        echo "AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID_UNMASKED"
-        echo "AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY_UNMASKED"
-      env:
-        AWS_ACCESS_KEY_ID_UNMASKED: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY_UNMASKED: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-access-key-id: ${{ env.sec }}
+        aws-secret-access-key: ${{ env.pass}}
         aws-region: ${{ env.AWS_DEFAULT_REGION }}
 
     - name: Install AWS CLI
