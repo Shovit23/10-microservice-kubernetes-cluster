@@ -5,7 +5,7 @@ on:
     branches:
     - master
   workflow_dispatch:
-
+    # Add this line to enable manual triggering
 
 jobs:
   deploy:
@@ -15,7 +15,7 @@ jobs:
       AWS_DEFAULT_REGION: 'ap-south-1' # Change to your AWS region
       CLUSTER_NAME: '10-microservice-kubernetes'
       NAMESPACE: 'default'
-      MANIFEST_PATH: 'release'
+      MANIFEST_PATH: 'release' # Update this to the correct path
 
     steps:
     - name: Checkout code
@@ -40,6 +40,4 @@ jobs:
 
     - name: Deploy to EKS
       run: |
-        for file in ${{ env.MANIFEST_PATH }}/*.yaml; do
-          kubectl apply -f $file -n ${{ env.NAMESPACE }};
-        done
+        kubectl apply -f ${{ env.MANIFEST_PATH }}/kubernetes-manifests.yaml -n ${{ env.NAMESPACE }} --validate=false
