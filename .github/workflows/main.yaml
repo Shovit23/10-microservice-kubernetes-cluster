@@ -15,7 +15,7 @@ jobs:
       AWS_DEFAULT_REGION: 'ap-south-1' # Change to your AWS region
       CLUSTER_NAME: '10-microservice-kubernetes'
       NAMESPACE: 'default'
-      MANIFEST_PATH: 'release/kubernetes-manifests.yaml'
+      MANIFEST_PATH: 'release'
 
     steps:
     - name: Checkout code
