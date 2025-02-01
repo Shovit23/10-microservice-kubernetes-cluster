@@ -36,7 +36,7 @@ jobs:
 
     - name: Configure kubectl
       run: |
-        aws eks update-kubeconfig --name ${{ env.CLUSTER_NAME }} --region ${{ env.AWS_DEFAULT_REGION }}
+        aws eks update-kubeconfig --name 10-microservice-kubernetes --region ap-south-1
         kubectl get nodes  # Verify that kubectl is configured correctly
 
     - name: Deploy to EKS
